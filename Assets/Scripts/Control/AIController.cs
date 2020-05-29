@@ -40,5 +40,13 @@ namespace RPG.Control
             float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             return distanceToPlayer < chaseDistance;
         }
+
+        // Called by Unity editor
+        // Callback to draw gizmos only if the object is selected. (Unity Code Snippets)
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, chaseDistance);
+        }
     }
 }
