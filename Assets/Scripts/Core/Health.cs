@@ -42,8 +42,14 @@ namespace RPG.Core
         {
             healthPoints = (float)state;
 
-            isDead = healthPoints == 0;
-            if (false == isDead) GetComponent<Animator>().Play("Locomotion");
+            if (healthPoints == 0)
+            {
+                Die();
+            }
+            else
+            {
+                GetComponent<Animator>().Play("Locomotion");
+            }
         }
     }
 }
