@@ -55,16 +55,42 @@ namespace RPG.Movement
             GetComponent<Animator>().SetFloat("forwardSpeed", speed);
         }
 
+        [System.Serializable]
+        private struct SaveData
+        {
+            public SerializableVector3 position;
+            public SerializableVector3 eulerAngles;
+        }
+
         public object CaptureState()
         {
-            return new SerializableVector3(transform.position);
+            /**
+             * @ another implement by Dictionary
+             * var data = new Dictionary<string, object>();
+             * data["position"] = new SerializableVector3(transform.position);
+             * data["rotation"] = new SerializableVector3(transform.eulerAngles);
+             */
+            var data = new SaveData();
+            data.position = new SerializableVector3(transform.position);
+            data.eulerAngles = new SerializableVector3(transform.eulerAngles);
+            return data;
         }
 
         public void RestoreState(object state)
         {
-            SerializableVector3 position = (SerializableVector3)state;
-            // transform.position = position.ToVector();
-            GetComponent<NavMeshAgent>().Warp(position.ToVector());
+            /**
+             * @ another implement by Dictionary
+             * var data = (Dictionary<string, object>)state;
+             * GetComponent<NavMeshAgent>().enabled = false;
+             * transform.position = ((SerializableVector3)data["position"]).ToVector();
+             * transform.eulerAngles = ((SerializableVector3)data["rotation"]).ToVector();
+             * GetComponent<NavMeshAgent>().enabled = true;
+             */
+            var data = (SaveData)state;
+            GetComponent<NavMeshAgent>().enabled = false;
+            transform.position = data.position.ToVector();
+            transform.eulerAngles = data.eulerAngles.ToVector();
+            GetComponent<NavMeshAgent>().enabled = true;
         }
     }
 }
