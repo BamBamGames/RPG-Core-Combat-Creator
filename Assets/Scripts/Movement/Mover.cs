@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using RPG.Core;
+using RPG.Saving;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace RPG.Movement
 {
-    public class Mover : MonoBehaviour, IAction
+    public class Mover : MonoBehaviour, IAction, ISaveable
     {
-        [SerializeField] Transform target;
-        [SerializeField] float maxSpeed = 6f;
+        [SerializeField] private Transform target;
+        [SerializeField] private float maxSpeed = 6f;
 
-        NavMeshAgent navMeshAgent;
-        Health health;
+        private NavMeshAgent navMeshAgent;
+        private Health health;
 
         private void Start()
         {
@@ -20,7 +21,7 @@ namespace RPG.Movement
             health = GetComponent<Health>();
         }
 
-        void Update()
+        private void Update()
         {
             navMeshAgent.enabled = (false == health.IsDead());
 
@@ -52,6 +53,18 @@ namespace RPG.Movement
 
             float speed = localVelocity.z;
             GetComponent<Animator>().SetFloat("forwardSpeed", speed);
+        }
+
+        public object CaptureState()
+        {
+            return new SerializableVector3(transform.position);
+        }
+
+        public void RestoreState(object state)
+        {
+            SerializableVector3 position = (SerializableVector3)state;
+            // transform.position = position.ToVector();
+            GetComponent<NavMeshAgent>().Warp(position.ToVector());
         }
     }
 }
