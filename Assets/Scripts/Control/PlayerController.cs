@@ -1,4 +1,3 @@
-using System;
 using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
@@ -8,7 +7,7 @@ namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
-        Health health;
+        private Health health;
 
         private void Start()
         {

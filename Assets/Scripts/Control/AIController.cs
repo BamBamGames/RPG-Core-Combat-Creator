@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using RPG.Combat;
+﻿using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
@@ -10,23 +7,24 @@ namespace RPG.Control
 {
     public class AIController : MonoBehaviour
     {
-        [SerializeField] float chaseDistance = 5f;
-        [SerializeField] float suspicionTime = 3f;
+        [SerializeField] private float chaseDistance = 5f;
+        [SerializeField] private float suspicionTime = 3f;
         [SerializeField] public PatrolPath patrolPath;
-        [SerializeField] float waypointTolerance = 1f;
-        [SerializeField] float waypointDwellTime = 3f;
+        [SerializeField] private float waypointTolerance = 1f;
+        [SerializeField] private float waypointDwellTime = 3f;
+
         [Range(0, 1)]
-        [SerializeField] float patrolSpeedFraction = 0.2f;
+        [SerializeField] private float patrolSpeedFraction = 0.2f;
 
-        Fighter fighter;
-        Health health;
-        Mover mover;
-        GameObject player;
+        private Fighter fighter;
+        private Health health;
+        private Mover mover;
+        private GameObject player;
 
-        Vector3 guardPosition;
-        float timeSinceLastSawPlayer = Mathf.Infinity;
-        float timeSinceArrivedAtWaypoint = Mathf.Infinity;
-        int currentWaypointIndex = 0;
+        private Vector3 guardPosition;
+        private float timeSinceLastSawPlayer = Mathf.Infinity;
+        private float timeSinceArrivedAtWaypoint = Mathf.Infinity;
+        private int currentWaypointIndex = 0;
 
         private void Start()
         {

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RPG.Core
 {
@@ -10,7 +8,7 @@ namespace RPG.Core
         public Transform target;
 
         // Update is called once per frame
-        void LateUpdate()
+        private void LateUpdate()
         {
             transform.position = target.position;
         }

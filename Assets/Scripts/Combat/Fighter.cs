@@ -1,17 +1,17 @@
-using UnityEngine;
-using RPG.Movement;
 using RPG.Core;
+using RPG.Movement;
+using UnityEngine;
 
 namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
-        [SerializeField] float weaponRange = 2f;
-        [SerializeField] float timeBetweenAttacks = 1f;
-        [SerializeField] float weaponDamage = 5f;
+        [SerializeField] private float weaponRange = 2f;
+        [SerializeField] private float timeBetweenAttacks = 1f;
+        [SerializeField] private float weaponDamage = 5f;
 
-        Health target;
-        float timeSinceLastAttack = Mathf.Infinity;
+        private Health target;
+        private float timeSinceLastAttack = Mathf.Infinity;
 
         private void Update()
         {
@@ -50,7 +50,7 @@ namespace RPG.Combat
         }
 
         // Animation Event
-        void Hit()
+        private void Hit()
         {
             if (target == null) return;
             target.TakeDamage(weaponDamage);

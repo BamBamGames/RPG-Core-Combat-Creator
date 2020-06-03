@@ -1,14 +1,12 @@
 ﻿using RPG.Saving;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPG.SceneManagement
 {
     public class SavingWrapper : MonoBehaviour
     {
-        [SerializeField] float fadeInTime = 0.2f;
+        [SerializeField] private float fadeInTime = 0.2f;
 
         private const string defaultSaveFile = "save";
 

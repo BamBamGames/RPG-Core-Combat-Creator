@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 namespace RPG.SceneManagement
 {

@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RPG.Control
 {
     public class PatrolPath : MonoBehaviour
     {
-        const float waypointGizmoRadius = 0.3f;
+        private const float waypointGizmoRadius = 0.3f;
 
         private void OnDrawGizmos()
         {
