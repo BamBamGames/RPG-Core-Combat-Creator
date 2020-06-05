@@ -3,24 +3,35 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private float speed = 7f;
+    [SerializeField] private float speed = 20f;
+    [SerializeField] private bool isHoming = true;
 
     private Health target = null;
     private float damage = 0f;
+    private bool stucked = false;
 
     // Update is called once per frame
     private void Update()
     {
         if (target == null) return;
 
-        transform.LookAt(GetAimLocation());
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        if (isHoming && false == target.IsDead())
+        {
+            transform.LookAt(GetAimLocation());
+        }
+
+        if (false == stucked)
+        {
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
     }
 
     public void SetTarget(Health target, float damage)
     {
         this.target = target;
         this.damage = damage;
+
+        transform.LookAt(GetAimLocation());
     }
 
     private Vector3 GetAimLocation()
@@ -38,10 +49,20 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var colliderHealth = other.GetComponent<Health>();
-        if (colliderHealth == null || colliderHealth != target) return;
+        if (other.GetComponent<Health>() != target) return;
+        if (target.IsDead()) return;
 
-        colliderHealth.TakeDamage(damage);
-        Destroy(this.gameObject);
+        StuckInto(other);
+        target.TakeDamage(damage);
+
+        //Destroy(this.gameObject);
+    }
+
+    private void StuckInto(Collider other)
+    {
+        // get stuck in dead target's collider
+        this.transform.parent = other.transform;
+        stucked = true;
+        transform.Find("Trail").gameObject.SetActive(false);
     }
 }
