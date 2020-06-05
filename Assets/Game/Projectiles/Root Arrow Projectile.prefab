@@ -49,6 +49,8 @@ MonoBehaviour:
   speed: 20
   isHoming: 1
   canBeStucked: 1
+  hitEffect: {fileID: 3124038819531984497, guid: 8ea6209917fa6bf4391d0039fc495c4e,
+    type: 3}
 --- !u!65 &7378253387527001539
 BoxCollider:
   m_ObjectHideFlags: 0
