@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float speed = 7f;
 
     private Health target = null;
+    private float damage = 0f;
 
     // Update is called once per frame
     private void Update()
@@ -16,9 +17,10 @@ public class Projectile : MonoBehaviour
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
-    public void SetTarget(Health target)
+    public void SetTarget(Health target, float damage)
     {
         this.target = target;
+        this.damage = damage;
     }
 
     private Vector3 GetAimLocation()
@@ -32,5 +34,14 @@ public class Projectile : MonoBehaviour
         }
 
         return aimPosition;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        var colliderHealth = other.GetComponent<Health>();
+        if (colliderHealth == null || colliderHealth != target) return;
+
+        colliderHealth.TakeDamage(damage);
+        Destroy(this.gameObject);
     }
 }
