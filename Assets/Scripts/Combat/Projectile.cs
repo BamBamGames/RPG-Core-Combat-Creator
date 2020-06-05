@@ -1,81 +1,107 @@
 ﻿using RPG.Core;
+using System.Collections;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+namespace RPG.Combat
 {
-    [SerializeField] private float speed = 20f;
-    [SerializeField] private bool isHoming = true;
-    [SerializeField] private bool canBeStucked = false;
-    [SerializeField] private GameObject hitEffect = null;
-
-    private Health target = null;
-    private float damage = 0f;
-    private bool stucked = false;
-
-    // Update is called once per frame
-    private void Update()
+    public class Projectile : MonoBehaviour
     {
-        if (target == null) return;
+        [SerializeField] private float speed = 20f;
+        [SerializeField] private bool isHoming = true;
+        [SerializeField] private GameObject hitEffect = null;
+        [SerializeField] private float maxLifeTime = 20;
 
-        if (isHoming && false == target.IsDead())
-        {
-            transform.LookAt(GetAimLocation());
-        }
+        [SerializeField] private GameObject[] destroyOnHit = null;
+        [SerializeField] private float lifeAfterImpact = 0f;
 
-        if (false == stucked)
+        [SerializeField] private bool canBeStucked = false;
+        [SerializeField] private GameObject[] destroyedOnStuck = null;
+
+        private Health target = null;
+        private float damage = 0f;
+
+        private Coroutine coroutine_Destroy;
+
+        // Update is called once per frame
+        private void Update()
         {
+            if (target == null) return;
+
+            if (isHoming && false == target.IsDead())
+            {
+                transform.LookAt(GetAimLocation());
+            }
+
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-    }
 
-    public void SetTarget(Health target, float damage)
-    {
-        this.target = target;
-        this.damage = damage;
-
-        transform.LookAt(GetAimLocation());
-    }
-
-    private Vector3 GetAimLocation()
-    {
-        Vector3 aimPosition = target.transform.position;
-
-        var targetCapsule = target.GetComponent<CapsuleCollider>();
-        if (targetCapsule != null)
+        public void SetTarget(Health target, float damage)
         {
-            aimPosition += Vector3.up * targetCapsule.height / 2;
+            this.target = target;
+            this.damage = damage;
+
+            transform.LookAt(GetAimLocation());
+
+            coroutine_Destroy = StartCoroutine(_destroyedAfterLifeTime());
+            //Destroy(this.gameObject, maxLifeTime);
         }
 
-        return aimPosition;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<Health>() != target) return;
-        if (target.IsDead()) return;
-
-        if (hitEffect != null)
+        private IEnumerator _destroyedAfterLifeTime()
         {
-            Instantiate(hitEffect, GetAimLocation(), this.transform.rotation);
-        }
-
-        target.TakeDamage(damage);
-
-        if (canBeStucked)
-        {
-            StuckInto(other);
-        }
-        else
-        {
+            yield return new WaitForSeconds(maxLifeTime);
             Destroy(this.gameObject);
         }
-    }
 
-    private void StuckInto(Collider other)
-    {
-        // get stuck in dead target's collider
-        this.transform.parent = other.transform;
-        stucked = true;
-        transform.Find("Trail").gameObject.SetActive(false);
+        private Vector3 GetAimLocation()
+        {
+            Vector3 aimPosition = target.transform.position;
+
+            var targetCapsule = target.GetComponent<CapsuleCollider>();
+            if (targetCapsule != null)
+            {
+                aimPosition += Vector3.up * targetCapsule.height / 2;
+            }
+
+            return aimPosition;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            StopCoroutine(coroutine_Destroy);
+
+            if (other.GetComponent<Health>() != target) return;
+            if (target.IsDead()) return;
+
+            if (hitEffect != null)
+            {
+                Instantiate(hitEffect, GetAimLocation(), this.transform.rotation);
+            }
+
+            speed = 0;
+            target.TakeDamage(damage);
+
+            if (canBeStucked)
+            {
+                StuckInto(other);
+                foreach (var toDestroy in destroyedOnStuck)
+                {
+                    Destroy(toDestroy, lifeAfterImpact);
+                }
+            }
+            else
+            {
+                foreach (var toDestroy in destroyOnHit)
+                {
+                    Destroy(toDestroy);
+                }
+                Destroy(this.gameObject, lifeAfterImpact);
+            }
+        }
+
+        private void StuckInto(Collider other)
+        {
+            // get stuck in dead target's collider
+            this.transform.parent = other.transform;
+        }
     }
 }
