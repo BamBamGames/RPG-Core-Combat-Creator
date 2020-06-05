@@ -5,6 +5,7 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float speed = 20f;
     [SerializeField] private bool isHoming = true;
+    [SerializeField] private bool canBeStucked = false;
 
     private Health target = null;
     private float damage = 0f;
@@ -52,10 +53,16 @@ public class Projectile : MonoBehaviour
         if (other.GetComponent<Health>() != target) return;
         if (target.IsDead()) return;
 
-        StuckInto(other);
         target.TakeDamage(damage);
 
-        //Destroy(this.gameObject);
+        if (canBeStucked)
+        {
+            StuckInto(other);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void StuckInto(Collider other)
