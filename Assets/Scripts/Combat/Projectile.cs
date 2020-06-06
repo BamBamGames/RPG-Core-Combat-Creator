@@ -67,8 +67,6 @@ namespace RPG.Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            StopCoroutine(coroutine_Destroy);
-
             if (other.GetComponent<Health>() != target) return;
             if (target.IsDead()) return;
 
@@ -83,25 +81,32 @@ namespace RPG.Combat
             if (canBeStucked)
             {
                 StuckInto(other);
-                foreach (var toDestroy in destroyedOnStuck)
-                {
-                    Destroy(toDestroy, lifeAfterImpact);
-                }
             }
             else
             {
-                foreach (var toDestroy in destroyOnHit)
-                {
-                    Destroy(toDestroy);
-                }
-                Destroy(this.gameObject, lifeAfterImpact);
+                DestroyOnCollider();
             }
         }
 
         private void StuckInto(Collider other)
         {
+            StopCoroutine(coroutine_Destroy);
+
             // get stuck in dead target's collider
             this.transform.parent = other.transform;
+            foreach (var toDestroy in destroyedOnStuck)
+            {
+                Destroy(toDestroy, lifeAfterImpact);
+            }
+        }
+
+        private void DestroyOnCollider()
+        {
+            foreach (var toDestroy in destroyOnHit)
+            {
+                Destroy(toDestroy);
+            }
+            Destroy(this.gameObject, lifeAfterImpact);
         }
     }
 }
