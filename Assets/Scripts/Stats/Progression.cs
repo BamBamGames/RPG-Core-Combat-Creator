@@ -7,6 +7,19 @@ namespace RPG.Stats
     {
         [SerializeField] private ProgressionCharacterClass[] characterClasses = null;
 
+        public float GetHealth(CharacterClass characterClass, int level)
+        {
+            foreach (var item in characterClasses)
+            {
+                if (item.characterClass == characterClass)
+                {
+                    return item.health[level - 1];
+                }
+            }
+
+            return 0;
+        }
+
         /**
          * if we don't have [System.Serializable]
          * Assets\Scripts\Stats\Progression.cs(13,17): warning CS0414: The field 'Progression.ProgressionCharacterClass.value' is assigned but its value is never used
@@ -16,8 +29,8 @@ namespace RPG.Stats
         [System.Serializable]
         class ProgressionCharacterClass
         {
-            [SerializeField] public CharacterClass characterClass;
-            [SerializeField] public float[] health;
+            public CharacterClass characterClass;
+            public float[] health;
         }
     }
 }

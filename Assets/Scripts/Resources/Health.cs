@@ -1,13 +1,21 @@
+using RPG.Core;
 using RPG.Saving;
+using RPG.Stats;
 using UnityEngine;
 
-namespace RPG.Core
+namespace RPG.Resources
 {
     public class Health : MonoBehaviour, ISaveable
     {
         [SerializeField] private float healthPoints = 100f;
 
         private bool isDead = false;
+
+        private void Start()
+        {
+            // todo : BUG: rewrite RestoreState() function 
+            healthPoints = GetComponent<BaseStats>().GetHealth();
+        }
 
         public bool IsDead()
         {
