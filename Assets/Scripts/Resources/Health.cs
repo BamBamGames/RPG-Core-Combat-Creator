@@ -14,7 +14,7 @@ namespace RPG.Resources
         private void Start()
         {
             // todo : BUG: rewrite RestoreState() function 
-            healthPoints = GetComponent<BaseStats>().GetHealth();
+            healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
         }
 
         public bool IsDead()
@@ -35,7 +35,7 @@ namespace RPG.Resources
 
         public float GetPercentage()
         {
-            return 100 * (healthPoints / GetComponent<BaseStats>().GetHealth());
+            return 100 * (healthPoints / GetComponent<BaseStats>().GetStat(Stat.Health));
         }
 
         private void Die()
@@ -53,8 +53,8 @@ namespace RPG.Resources
 
             var experiance = instigator.GetComponent<Experience>();
             if (experiance == null) return;
-            
-            experiance.GainExperience(GetComponent<BaseStats>().GetExperienceReward());
+
+            experiance.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
         }
 
         public object CaptureState()
