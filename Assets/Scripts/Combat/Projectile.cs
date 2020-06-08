@@ -18,6 +18,7 @@ namespace RPG.Combat
         [SerializeField] private GameObject[] destroyedOnStuck = null;
 
         private Health target = null;
+        private GameObject instigator = null;
         private float damage = 0f;
 
         private Coroutine coroutine_Destroy;
@@ -35,9 +36,10 @@ namespace RPG.Combat
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
-        public void SetTarget(Health target, float damage)
+        public void SetTarget(Health target, GameObject instigator, float damage)
         {
             this.target = target;
+            this.instigator = instigator;
             this.damage = damage;
 
             transform.LookAt(GetAimLocation());
@@ -76,7 +78,7 @@ namespace RPG.Combat
             }
 
             speed = 0;
-            target.TakeDamage(damage);
+            target.TakeDamage(instigator, damage);
 
             if (canBeStucked)
             {
