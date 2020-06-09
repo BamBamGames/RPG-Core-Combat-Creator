@@ -17,6 +17,11 @@ namespace RPG.Saving
             {
                 buildIndex = (int)state["lastSceneBuildIndex"];
             }
+
+            /**
+             * always keep LoadSceneAsync() before RestoreState()
+             * because RestoreState() implement dependence the Awake() is done.
+             */
             yield return SceneManager.LoadSceneAsync(buildIndex);
             RestoreState(state);
         }
