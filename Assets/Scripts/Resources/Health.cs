@@ -12,8 +12,10 @@ namespace RPG.Resources
 
         private float maxHealthPoints = -1f;
         private float healthPoints = -1f;
-
         private bool isDead = false;
+
+        public float MaxHealthPoints { get => maxHealthPoints; }
+        public float HealthPoints { get => healthPoints; }
 
         private void Start()
         {
@@ -33,6 +35,8 @@ namespace RPG.Resources
 
         public void TakeDamage(GameObject instigator, float damage)
         {
+            print(this.gameObject.name + " took damage: " + damage);
+
             healthPoints = Mathf.Max(0, healthPoints - damage);
 
             if (healthPoints == 0)
