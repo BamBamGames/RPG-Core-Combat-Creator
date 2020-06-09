@@ -7,12 +7,19 @@ namespace RPG.Resources
 {
     public class Health : MonoBehaviour, ISaveable
     {
+        [Tooltip("升级后血量的百分比, 设置为小于0关闭这个特性, 关闭特性后按照当前血量的百分比生成血量")]
+        [SerializeField] private float regenationPercentage = -1f;
+
+        private float maxHealthPoints = -1f;
         private float healthPoints = -1f;
 
         private bool isDead = false;
 
         private void Start()
         {
+            GetComponent<BaseStats>().onLevelUp += RegenerateHealth;
+            maxHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
+
             if (healthPoints < 0)
             {
                 healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
@@ -37,7 +44,7 @@ namespace RPG.Resources
 
         public float GetPercentage()
         {
-            return 100 * (healthPoints / GetComponent<BaseStats>().GetStat(Stat.Health));
+            return 100 * (healthPoints / maxHealthPoints);
         }
 
         private void Die()
@@ -57,6 +64,26 @@ namespace RPG.Resources
             if (experiance == null) return;
 
             experiance.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
+        }
+
+        private void RegenerateHealth()
+        {
+            if (regenationPercentage > 0)
+            {
+                var regenHealthPoint = GetComponent<BaseStats>().GetStat(Stat.Health) * regenationPercentage / 100;
+                healthPoints = Mathf.Max(healthPoints, regenHealthPoint);
+            }
+            else
+            {
+                var newMaxHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
+                if (newMaxHealthPoints > maxHealthPoints)
+                {
+                    var percentage = GetPercentage() / 100;
+
+                    maxHealthPoints = newMaxHealthPoints;
+                    healthPoints = maxHealthPoints * percentage;
+                }
+            }
         }
 
         public object CaptureState()
