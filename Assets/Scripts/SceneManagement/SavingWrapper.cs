@@ -10,9 +10,21 @@ namespace RPG.SceneManagement
 
         private const string defaultSaveFile = "save";
 
-        private IEnumerator Start()
+        private void Awake()
+        {
+            StartCoroutine(LoadLastScene());
+        }
+
+        private IEnumerator LoadLastScene()
         {
             Fader fader = FindObjectOfType<Fader>();
+            // make sure fader is instantiate in PersistentObjectSpawner
+            while (fader == null)
+            {
+                print("yield return new WaitForSeconds(0.1f) to make sure fader is instantiate.");
+                yield return new WaitForSeconds(0.1f);
+            }
+
             fader.FadeOutImmediate();
             yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile);
             yield return fader.FadeIn(fadeInTime);
