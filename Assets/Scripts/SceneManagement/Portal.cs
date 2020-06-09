@@ -14,7 +14,7 @@ namespace RPG.SceneManagement
 
         [SerializeField] private int sceneToLoad = -1;
         [SerializeField] public Transform spawnPoint;
-        [SerializeField] private DestinationIdentifier destination;
+        [SerializeField] private DestinationIdentifier destination = DestinationIdentifier.A;
         [SerializeField] private float fadeOutTime = 0.5f;
         [SerializeField] private float fadeInTime = 1f;
         [SerializeField] private float fadeWaitTime = 0.5f;

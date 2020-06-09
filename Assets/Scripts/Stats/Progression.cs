@@ -56,16 +56,15 @@ namespace RPG.Stats
         [System.Serializable]
         class ProgressionCharacterClass
         {
-            public CharacterClass characterClass;
-            public ProgressionStat[] stats;
+            public CharacterClass characterClass = CharacterClass.Grunt;
+            public ProgressionStat[] stats = null;
         }
 
         [System.Serializable]
         class ProgressionStat
         {
-            public Stat stat;
-            public float[] levels;
-
+            public Stat stat = Stat.Health;
+            public float[] levels = null;
         }
     }
 }
