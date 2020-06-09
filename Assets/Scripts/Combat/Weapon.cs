@@ -9,6 +9,7 @@ namespace RPG.Combat
         [SerializeField] private AnimatorOverrideController animatornOverride = null;
         [SerializeField] private GameObject equippedPrefab = null;
         [SerializeField] private float damage = 5f;
+        [SerializeField] private float bonus = 50f;
         [SerializeField] private float range = 2f;
         [SerializeField] private bool isRightHanded = true;
         [SerializeField] private Projectile projectile = null;
@@ -16,6 +17,7 @@ namespace RPG.Combat
         private const string weaponName = "Weapon";
         public float Damage { get => damage; }
         public float Range { get => range; }
+        public float Bonus { get => bonus; }
 
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {

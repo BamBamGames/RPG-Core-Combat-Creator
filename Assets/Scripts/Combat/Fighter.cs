@@ -130,11 +130,19 @@ namespace RPG.Combat
             GetComponent<Animator>().SetTrigger("stopAttack");
         }
 
-        IEnumerable<float> IModifierProvider.GetAddittiveModifier(Stat stat)
+        IEnumerable<float> IModifierProvider.GetAdditiveModifiers(Stat stat)
         {
             if (stat == Stat.Damage)
             {
                 yield return currentWeapon.Damage;
+            }
+        }
+
+        IEnumerable<float> IModifierProvider.GetPercentageModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return currentWeapon.Bonus;
             }
         }
 
