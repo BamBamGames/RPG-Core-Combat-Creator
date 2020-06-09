@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Resources;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour, IAction, ISaveable
+    public class Fighter : MonoBehaviour, IAction, ISaveable, IModifierProvider
     {
         [SerializeField] private float timeBetweenAttacks = 1f;
         [SerializeField] private Transform rightHandTransform = null;
@@ -129,13 +130,21 @@ namespace RPG.Combat
             GetComponent<Animator>().SetTrigger("stopAttack");
         }
 
-        public object CaptureState()
+        IEnumerable<float> IModifierProvider.GetAddittiveModifier(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return currentWeapon.Damage;
+            }
+        }
+
+        object ISaveable.CaptureState()
         {
             // currentWeapon never be null, use Unarmed weapon instead null.
             return currentWeapon.name;
         }
 
-        public void RestoreState(object state)
+        void ISaveable.RestoreState(object state)
         {
             string weaponName = (string)state;
             Weapon weapon = UnityEngine.Resources.Load<Weapon>(weaponName);
