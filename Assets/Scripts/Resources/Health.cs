@@ -17,15 +17,24 @@ namespace RPG.Resources
         public float MaxHealthPoints { get => maxHealthPoints; }
         public float HealthPoints { get => healthPoints; }
 
-        private void Start()
+        private void OnEnable()
         {
             GetComponent<BaseStats>().onLevelUp += RegenerateHealth;
+        }
+
+        private void Start()
+        {
             maxHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
 
             if (healthPoints < 0)
             {
                 healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
             }
+        }
+
+        private void OnDisable()
+        {
+            GetComponent<BaseStats>().onLevelUp -= RegenerateHealth;
         }
 
         public bool IsDead()

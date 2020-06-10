@@ -17,16 +17,15 @@ namespace RPG.SceneManagement
 
         private IEnumerator LoadLastScene()
         {
-            Fader fader = FindObjectOfType<Fader>();
-            // make sure fader is instantiate in PersistentObjectSpawner
-            while (fader == null)
-            {
-                print("yield return new WaitForSeconds(0.1f) to make sure fader is instantiate.");
-                yield return new WaitForSeconds(0.1f);
-            }
-
-            fader.FadeOutImmediate();
             yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile);
+
+            /**
+             * this is ok because it still is going to be happening before the 
+             * first frame and so before things are rendering.
+             */
+            // TODO: But it is actually safer because Fader is instantiate in PersistentObjectSpawner in Awake()
+            Fader fader = FindObjectOfType<Fader>();
+            fader.FadeOutImmediate();
             yield return fader.FadeIn(fadeInTime);
         }
 
