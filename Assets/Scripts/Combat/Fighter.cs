@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Resources;
@@ -17,14 +18,22 @@ namespace RPG.Combat
 
         private Health target;
         private float timeSinceLastAttack = Mathf.Infinity;
-        private Weapon currentWeapon = null;
+        private LazyValue<Weapon> currentWeapon;
+
+        private void Awake()
+        {
+            currentWeapon = new LazyValue<Weapon>(SetDefaultWeapon);
+        }
+
+        private Weapon SetDefaultWeapon()
+        {
+            AttachWeapon(defaultWeapon);
+            return defaultWeapon;
+        }
 
         private void Start()
         {
-            if (currentWeapon == null)
-            {
-                EquipWeapon(defaultWeapon);
-            }
+            currentWeapon.ForceInit();
         }
 
         private void Update()
@@ -47,8 +56,12 @@ namespace RPG.Combat
 
         public void EquipWeapon(Weapon weapon)
         {
-            currentWeapon = weapon;
+            currentWeapon.value = weapon;
+            AttachWeapon(weapon);
+        }
 
+        private void AttachWeapon(Weapon weapon)
+        {
             Animator animator = GetComponent<Animator>();
             weapon.Spawn(rightHandTransform, leftHandTransform, animator);
         }
@@ -82,9 +95,9 @@ namespace RPG.Combat
             if (target == null) return;
 
             float calculatedDamage = GetComponent<BaseStats>().GetStat(Stat.Damage);
-            if (currentWeapon.HasProjectile())
+            if (currentWeapon.value.HasProjectile())
             {
-                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, this.gameObject, calculatedDamage);
+                currentWeapon.value.LaunchProjectile(rightHandTransform, leftHandTransform, target, this.gameObject, calculatedDamage);
             }
             else
             {
@@ -100,7 +113,7 @@ namespace RPG.Combat
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, target.transform.position) < currentWeapon.Range;
+            return Vector3.Distance(transform.position, target.transform.position) < currentWeapon.value.Range;
         }
 
         public bool CanAttack(GameObject combatTarget)
@@ -134,7 +147,7 @@ namespace RPG.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return currentWeapon.Damage;
+                yield return currentWeapon.value.Damage;
             }
         }
 
@@ -142,14 +155,14 @@ namespace RPG.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return currentWeapon.Bonus;
+                yield return currentWeapon.value.Bonus;
             }
         }
 
         object ISaveable.CaptureState()
         {
             // currentWeapon never be null, use Unarmed weapon instead null.
-            return currentWeapon.name;
+            return currentWeapon.value.name;
         }
 
         void ISaveable.RestoreState(object state)
