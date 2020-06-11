@@ -11,7 +11,10 @@ namespace RPG.Resources
     {
         [Tooltip("升级后血量的百分比, 设置为小于0关闭这个特性, 关闭特性后按照当前血量的百分比生成血量")]
         [SerializeField] private float regenationPercentage = -1f;
-        [SerializeField] UnityEvent takeDamage;
+        [SerializeField] TakeDamageEvent takeDamage = null;
+
+        [System.Serializable]
+        public class TakeDamageEvent : UnityEvent<float> { }
 
         private LazyValue<float> maxHealthPoints;
         private LazyValue<float> healthPoints;
@@ -62,7 +65,7 @@ namespace RPG.Resources
             }
             else
             {
-                takeDamage.Invoke();
+                takeDamage.Invoke(damage);
             }
         }
 
