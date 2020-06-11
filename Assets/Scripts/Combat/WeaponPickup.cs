@@ -51,9 +51,9 @@ namespace RPG.Combat
             return true;
         }
 
-        PlayerController.CursorType IRaycastable.GetCursorType()
+        CursorType IRaycastable.GetCursorType()
         {
-            return PlayerController.CursorType.Combat;
+            return CursorType.Pickup;
         }
     }
 }
