@@ -3,6 +3,7 @@ using RPG.Core;
 using RPG.Saving;
 using RPG.Stats;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RPG.Resources
 {
@@ -10,6 +11,7 @@ namespace RPG.Resources
     {
         [Tooltip("升级后血量的百分比, 设置为小于0关闭这个特性, 关闭特性后按照当前血量的百分比生成血量")]
         [SerializeField] private float regenationPercentage = -1f;
+        [SerializeField] UnityEvent takeDamage;
 
         private LazyValue<float> maxHealthPoints;
         private LazyValue<float> healthPoints;
@@ -52,14 +54,15 @@ namespace RPG.Resources
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-            print(this.gameObject.name + " took damage: " + damage);
-
             healthPoints.value = Mathf.Max(0, healthPoints.value - damage);
-
             if (healthPoints.value == 0)
             {
                 AwardExperience(instigator);
                 Die();
+            }
+            else
+            {
+                takeDamage.Invoke();
             }
         }
 
