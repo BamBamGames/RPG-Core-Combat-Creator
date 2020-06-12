@@ -5,7 +5,7 @@ using RPG.Stats;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace RPG.Resources
+namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, ISaveable
     {
@@ -71,7 +71,7 @@ namespace RPG.Resources
 
         public float GetPercentage()
         {
-            return 100 * (healthPoints.value / maxHealthPoints.value);
+            return healthPoints.value / maxHealthPoints.value;
         }
 
         private void Die()
@@ -105,7 +105,7 @@ namespace RPG.Resources
                 var newMaxHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
                 if (newMaxHealthPoints > maxHealthPoints.value)
                 {
-                    var percentage = GetPercentage() / 100;
+                    var percentage = GetPercentage();
 
                     maxHealthPoints.value = newMaxHealthPoints;
                     healthPoints.value = maxHealthPoints.value * percentage;

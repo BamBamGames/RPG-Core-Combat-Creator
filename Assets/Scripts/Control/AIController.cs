@@ -2,7 +2,7 @@
 using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
-using RPG.Resources;
+using RPG.Attributes;
 using UnityEngine;
 
 namespace RPG.Control
@@ -34,7 +34,7 @@ namespace RPG.Control
             health = GetComponent<Health>();
             mover = GetComponent<Mover>();
             player = GameObject.FindWithTag("Player");
-            
+
             guardPosition = new LazyValue<Vector3>(GetGuardPosition);
         }
 
