@@ -1,4 +1,6 @@
 using System.Collections;
+using RPG.Control;
+using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -46,15 +48,22 @@ namespace RPG.SceneManagement
                 Debug.LogError("Scene to load not set.");
                 yield break;
             }
-            Fader fade = GameObject.FindObjectOfType<Fader>();
 
             DontDestroyOnLoad(this.gameObject);
+
+            Fader fade = GameObject.FindObjectOfType<Fader>();
+            SavingWrapper wrapper = GameObject.FindObjectOfType<SavingWrapper>();
+            var playerController = GameObject.FindObjectOfType<PlayerController>();
+            playerController.enabled = false;
+
             yield return fade.FadeOut(fadeOutTime);
 
-            SavingWrapper wrapper = GameObject.FindObjectOfType<SavingWrapper>();
             wrapper.Save();
 
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
+            var newPlayerController = GameObject.FindObjectOfType<PlayerController>();
+            newPlayerController.enabled = false;
+
             wrapper.Load();
 
             Portal otherPortal = GetOtherPortal();
@@ -64,8 +73,9 @@ namespace RPG.SceneManagement
             wrapper.Save();
 
             yield return new WaitForSeconds(fadeWaitTime);
-            yield return fade.FadeIn(fadeInTime);
+            fade.FadeIn(fadeInTime);
 
+            newPlayerController.enabled = true;
             Destroy(this.gameObject);
         }
 
