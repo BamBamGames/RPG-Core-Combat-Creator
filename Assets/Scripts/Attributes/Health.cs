@@ -12,6 +12,7 @@ namespace RPG.Attributes
         [Tooltip("升级后血量的百分比, 设置为小于0关闭这个特性, 关闭特性后按照当前血量的百分比生成血量")]
         [SerializeField] private float regenationPercentage = -1f;
         [SerializeField] TakeDamageEvent takeDamage = null;
+        [SerializeField] UnityEvent onDie = null;
 
         [System.Serializable]
         public class TakeDamageEvent : UnityEvent<float> { }
@@ -60,8 +61,12 @@ namespace RPG.Attributes
             healthPoints.value = Mathf.Max(0, healthPoints.value - damage);
             if (healthPoints.value == 0)
             {
-                AwardExperience(instigator);
+                // Die() method is get called when we're restoring from save
+                // and we don't want death sound effects(SFX) happening when we 
+                // travel between worlds.
+                onDie.Invoke();
                 Die();
+                AwardExperience(instigator);
             }
             else
             {

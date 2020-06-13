@@ -1,6 +1,7 @@
 ﻿using RPG.Attributes;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RPG.Combat
 {
@@ -11,11 +12,16 @@ namespace RPG.Combat
         [SerializeField] private GameObject hitEffect = null;
         [SerializeField] private float maxLifeTime = 20;
 
+        [Header("Destory behaviour")]
         [SerializeField] private GameObject[] destroyOnHit = null;
         [SerializeField] private float lifeAfterImpact = 0f;
 
+        [Header("Stuck behaviour")]
         [SerializeField] private bool canBeStucked = false;
         [SerializeField] private GameObject[] destroyedOnStuck = null;
+
+        [Header("Event")]
+        [SerializeField] UnityEvent onHit = null;
 
         private Health target = null;
         private GameObject instigator = null;
@@ -72,12 +78,13 @@ namespace RPG.Combat
             if (other.GetComponent<Health>() != target) return;
             if (target.IsDead()) return;
 
+            speed = 0;
+            onHit.Invoke();
             if (hitEffect != null)
             {
                 Instantiate(hitEffect, GetAimLocation(), this.transform.rotation);
             }
 
-            speed = 0;
             target.TakeDamage(instigator, damage);
 
             if (canBeStucked)
