@@ -19,6 +19,8 @@ namespace RPG.Control
 
         [SerializeField] private CursorMapping[] cursorMappings = null;
         [SerializeField] private float maxNavMeshProjectileDistance = 1f;
+        [Tooltip("鼠标有效点击范围")]
+        [SerializeField] private float raycastRadius = 1f;
 
         private Health health;
         private Mover mover;
@@ -76,8 +78,7 @@ namespace RPG.Control
 
         private RaycastHit[] RaycastAllSorted()
         {
-            var hits = Physics.RaycastAll(GetMouseRay());
-
+            var hits = Physics.SphereCastAll(GetMouseRay(), raycastRadius);
             var distances = new float[hits.Length];
             for (int i = 0; i < hits.Length; i++)
             {

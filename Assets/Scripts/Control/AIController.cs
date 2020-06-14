@@ -15,6 +15,8 @@ namespace RPG.Control
         [SerializeField] public PatrolPath patrolPath;
         [SerializeField] private float waypointTolerance = 1f;
         [SerializeField] private float waypointDwellTime = 3f;
+        [Tooltip("通知这个范围内的其他敌人")]
+        [SerializeField] private float shoutDistance = 5f;
 
         [Range(0, 1)]
         [SerializeField] private float patrolSpeedFraction = 0.2f;
@@ -29,6 +31,7 @@ namespace RPG.Control
         private float timeSinceArrivedAtWaypoint = Mathf.Infinity;
         private float timeSinceAggrevated = Mathf.Infinity;
         private int currentWaypointIndex = 0;
+
 
         private void Awake()
         {
@@ -127,6 +130,21 @@ namespace RPG.Control
         {
             timeSinceLastSawPlayer = 0;
             fighter.Attack(player);
+
+            AggrevateNearbyEnemies();
+        }
+
+        private void AggrevateNearbyEnemies()
+        {
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, shoutDistance, Vector3.up, 0);
+            foreach (var hit in hits)
+            {
+                var enemyAI = hit.transform.GetComponent<AIController>();
+                if (enemyAI != null)
+                {
+                    enemyAI.Aggrevate();
+                }
+            }
         }
 
         private bool IsAggrevated()
