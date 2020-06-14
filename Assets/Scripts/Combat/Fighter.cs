@@ -17,12 +17,14 @@ namespace RPG.Combat
         [SerializeField] private WeaponConfig defaultWeaponConfig = null;
 
         private Health target;
+        private Mover mover;
         private float timeSinceLastAttack = Mathf.Infinity;
         private WeaponConfig currentWeaponConfig;
         private LazyValue<Weapon> currentWeapon;
 
         private void Awake()
         {
+            mover = GetComponent<Mover>();
             currentWeaponConfig = defaultWeaponConfig;
             currentWeapon = new LazyValue<Weapon>(SetDefaultWeapon);
         }
@@ -125,6 +127,7 @@ namespace RPG.Combat
         public bool CanAttack(GameObject combatTarget)
         {
             if (combatTarget == null) { return false; }
+            if (false == mover.CanMoveTo(combatTarget.transform.position)) { return false; }
 
             var targetToTest = combatTarget.GetComponent<Health>();
             return null != targetToTest && false == targetToTest.IsDead();
