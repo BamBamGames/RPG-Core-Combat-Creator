@@ -74,6 +74,11 @@ namespace RPG.Attributes
             }
         }
 
+        public void Heal(float healthToRestore)
+        {
+            healthPoints.value = Mathf.Min(healthPoints.value + healthToRestore, MaxHealthPoints);
+        }
+
         public float GetPercentage()
         {
             return healthPoints.value / maxHealthPoints.value;
@@ -118,12 +123,12 @@ namespace RPG.Attributes
             }
         }
 
-        public object CaptureState()
+        object ISaveable.CaptureState()
         {
             return healthPoints.value;
         }
 
-        public void RestoreState(object state)
+        void ISaveable.RestoreState(object state)
         {
             healthPoints.value = (float)state;
 
