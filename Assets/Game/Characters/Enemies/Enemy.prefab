@@ -232,7 +232,7 @@ PrefabInstance:
     - target: {fileID: 2566994269858932106, guid: 4273203e005d09149a44f0462cc29b67,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4053414501749624089, guid: 4273203e005d09149a44f0462cc29b67,
         type: 3}
@@ -266,6 +266,12 @@ PrefabInstance:
       propertyPath: rightHandTransform
       value: 
       objectReference: {fileID: 411146885983561467}
+    - target: {fileID: 4053414501749624089, guid: 4273203e005d09149a44f0462cc29b67,
+        type: 3}
+      propertyPath: defaultWeaponConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: aae0eb48be9151541bb3729e405ee33c,
+        type: 2}
     - target: {fileID: 6642768365464085074, guid: 4273203e005d09149a44f0462cc29b67,
         type: 3}
       propertyPath: m_Name

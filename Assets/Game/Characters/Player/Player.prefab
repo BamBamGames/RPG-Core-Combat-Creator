@@ -58,6 +58,8 @@ MonoBehaviour:
   - type: 4
     texture: {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3, type: 3}
     hotspot: {x: 0, y: 0}
+  maxNavMeshProjectileDistance: 1
+  maxNavPathLength: 40
 --- !u!114 &3607906868065070617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,6 +106,11 @@ PrefabInstance:
       propertyPath: uniqueIdentifier
       value: player
       objectReference: {fileID: 0}
+    - target: {fileID: 2566994269858932106, guid: 4273203e005d09149a44f0462cc29b67,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4053414501749624089, guid: 4273203e005d09149a44f0462cc29b67,
         type: 3}
       propertyPath: weaponDamage
@@ -148,6 +155,12 @@ PrefabInstance:
       propertyPath: leftHandTransform
       value: 
       objectReference: {fileID: 6366289894130979242}
+    - target: {fileID: 4053414501749624089, guid: 4273203e005d09149a44f0462cc29b67,
+        type: 3}
+      propertyPath: defaultWeaponConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: aae0eb48be9151541bb3729e405ee33c,
+        type: 2}
     - target: {fileID: 6642768365464085074, guid: 4273203e005d09149a44f0462cc29b67,
         type: 3}
       propertyPath: m_Name
@@ -212,6 +225,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146087692276920104, guid: 4273203e005d09149a44f0462cc29b67,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4273203e005d09149a44f0462cc29b67, type: 3}
