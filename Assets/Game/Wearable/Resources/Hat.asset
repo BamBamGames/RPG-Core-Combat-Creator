@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: 9308c4a0-d11d-4860-9d71-da1fede215d8
   displayName: Hat
   description: Hat, beautiful hat
-  icon: {fileID: 21300000, guid: 7c4272045db356d4191801bf4343dbe3, type: 3}
+  icon: {fileID: 21300000, guid: c1b61b3a91732a747a8496fc75a13fe2, type: 3}
   pickup: {fileID: 4069397192813177059, guid: 09e95a38fd5a0754b9d0cc2ce71f174b, type: 3}
   stackable: 1
   allowedEquipLocation: 0
