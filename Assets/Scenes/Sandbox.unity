@@ -270,8 +270,8 @@ Transform:
   m_LocalPosition: {x: 22.8, y: 1.5, z: 9.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 654246835}
   - {fileID: 1414289686}
+  - {fileID: 654246835}
   - {fileID: 950690994}
   - {fileID: 930117696}
   m_Father: {fileID: 0}
@@ -735,7 +735,7 @@ PrefabInstance:
         type: 3}
       propertyPath: item
       value: 
-      objectReference: {fileID: 11400000, guid: cbefa50111b7226478621f8833e05ceb,
+      objectReference: {fileID: 11400000, guid: c28c4f643ae411243815ba7cc7fa484b,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea4091ce0945beb4d97b040f4c6c0c06, type: 3}
@@ -4008,7 +4008,7 @@ PrefabInstance:
     - target: {fileID: 8511142307778793037, guid: 7e7b22874d73ac347b928a7f911d2ed3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -570.74994
+      value: -570.75006
       objectReference: {fileID: 0}
     - target: {fileID: 8511142307778793037, guid: 7e7b22874d73ac347b928a7f911d2ed3,
         type: 3}
@@ -4018,7 +4018,7 @@ PrefabInstance:
     - target: {fileID: 8511142307778793037, guid: 7e7b22874d73ac347b928a7f911d2ed3,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00010525408
+      value: 0.00024231621
       objectReference: {fileID: 0}
     - target: {fileID: 8511493582795218899, guid: 7e7b22874d73ac347b928a7f911d2ed3,
         type: 3}
