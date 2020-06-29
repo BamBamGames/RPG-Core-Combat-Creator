@@ -17,28 +17,21 @@ namespace RPG.Attributes
         [System.Serializable]
         public class TakeDamageEvent : UnityEvent<float> { }
 
-        private LazyValue<float> maxHealthPoints;
         private LazyValue<float> healthPoints;
 
         private bool isDead = false;
 
-        public float MaxHealthPoints { get => maxHealthPoints.value; }
+        public float MaxHealthPoints { get => GetComponent<BaseStats>().GetStat(Stat.Health); }
         public float HealthPoints { get => healthPoints.value; }
 
         private void Awake()
         {
-            maxHealthPoints = new LazyValue<float>(GetInitialHealth);
             healthPoints = new LazyValue<float>(GetInitialHealth);
         }
 
         private void OnEnable()
         {
             GetComponent<BaseStats>().onLevelUp += RegenerateHealth;
-        }
-
-        private void Start()
-        {
-            maxHealthPoints.ForceInit();
         }
 
         private void OnDisable()
@@ -81,7 +74,7 @@ namespace RPG.Attributes
 
         public float GetPercentage()
         {
-            return healthPoints.value / maxHealthPoints.value;
+            return healthPoints.value / MaxHealthPoints;
         }
 
         private void Die()
@@ -105,22 +98,25 @@ namespace RPG.Attributes
 
         private void RegenerateHealth()
         {
-            if (regenationPercentage > 0)
-            {
-                var regenHealthPoint = GetComponent<BaseStats>().GetStat(Stat.Health) * regenationPercentage / 100;
-                healthPoints.value = Mathf.Max(healthPoints.value, regenHealthPoint);
-            }
-            else
-            {
-                var newMaxHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
-                if (newMaxHealthPoints > maxHealthPoints.value)
-                {
-                    var percentage = GetPercentage();
+            var regenHealthPoint = GetComponent<BaseStats>().GetStat(Stat.Health) * regenationPercentage / 100;
+            healthPoints.value = Mathf.Max(healthPoints.value, regenHealthPoint);
 
-                    maxHealthPoints.value = newMaxHealthPoints;
-                    healthPoints.value = maxHealthPoints.value * percentage;
-                }
-            }
+            // if (regenationPercentage > 0)
+            // {
+            //     var regenHealthPoint = GetComponent<BaseStats>().GetStat(Stat.Health) * regenationPercentage / 100;
+            //     healthPoints.value = Mathf.Max(healthPoints.value, regenHealthPoint);
+            // }
+            // else
+            // {
+            //     var newMaxHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
+            //     if (newMaxHealthPoints > maxHealthPoints.value)
+            //     {
+            //         var percentage = GetPercentage();
+
+            //         maxHealthPoints.value = newMaxHealthPoints;
+            //         healthPoints.value = maxHealthPoints.value * percentage;
+            //     }
+            // }
         }
 
         object ISaveable.CaptureState()
