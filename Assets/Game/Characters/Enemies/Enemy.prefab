@@ -75,14 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scatterDistance: 2
-  dropLibrary:
-  - {fileID: 11400000, guid: cbefa50111b7226478621f8833e05ceb, type: 2}
-  - {fileID: 11400000, guid: c28c4f643ae411243815ba7cc7fa484b, type: 2}
-  - {fileID: 11400000, guid: 790c1145cb030184886cc715a79246f1, type: 2}
-  - {fileID: 11400000, guid: a6e5ae7b67cdb07438dd6215e802a58b, type: 2}
-  - {fileID: 11400000, guid: 9a40046bacbb25b4eac1d2c3b6ea2491, type: 2}
-  - {fileID: 11400000, guid: 1e086f5148d8369449deb06fbf5692a7, type: 2}
-  numberOfDrops: 2
+  dropLibrary: {fileID: 11400000, guid: 43c4c71d2c4a93f478a12d73cd962b40, type: 2}
 --- !u!1001 &411146885983146485
 PrefabInstance:
   m_ObjectHideFlags: 0
