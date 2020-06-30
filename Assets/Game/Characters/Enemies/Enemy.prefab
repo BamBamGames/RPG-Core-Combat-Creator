@@ -56,10 +56,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chaseDistance: 5
   suspicionTime: 3
+  agroCooldownTime: 10
   patrolPath: {fileID: 0}
   waypointTolerance: 1
   waypointDwellTime: 3
+  shoutDistance: 5
   patrolSpeedFraction: 0.2
+--- !u!114 &6972653236153662147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8708066333309681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 426a8b1703b75f94c8b3f674ca519a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scatterDistance: 2
+  dropLibrary:
+  - {fileID: 11400000, guid: cbefa50111b7226478621f8833e05ceb, type: 2}
+  - {fileID: 11400000, guid: c28c4f643ae411243815ba7cc7fa484b, type: 2}
+  - {fileID: 11400000, guid: 790c1145cb030184886cc715a79246f1, type: 2}
+  - {fileID: 11400000, guid: a6e5ae7b67cdb07438dd6215e802a58b, type: 2}
+  - {fileID: 11400000, guid: 9a40046bacbb25b4eac1d2c3b6ea2491, type: 2}
+  - {fileID: 11400000, guid: 1e086f5148d8369449deb06fbf5692a7, type: 2}
+  numberOfDrops: 2
 --- !u!1001 &411146885983146485
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -226,6 +249,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114639529224327838, guid: 4273203e005d09149a44f0462cc29b67,
         type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114639529224327838, guid: 4273203e005d09149a44f0462cc29b67,
+        type: 3}
       propertyPath: health
       value: 20
       objectReference: {fileID: 0}
@@ -257,6 +285,31 @@ PrefabInstance:
     - target: {fileID: 114639529224327838, guid: 4273203e005d09149a44f0462cc29b67,
         type: 3}
       propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114639529224327838, guid: 4273203e005d09149a44f0462cc29b67,
+        type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114639529224327838, guid: 4273203e005d09149a44f0462cc29b67,
+        type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114639529224327838, guid: 4273203e005d09149a44f0462cc29b67,
+        type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 6972653236153662147}
+    - target: {fileID: 114639529224327838, guid: 4273203e005d09149a44f0462cc29b67,
+        type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: RandomDrop
+      objectReference: {fileID: 0}
+    - target: {fileID: 114639529224327838, guid: 4273203e005d09149a44f0462cc29b67,
+        type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2566994269858932106, guid: 4273203e005d09149a44f0462cc29b67,
