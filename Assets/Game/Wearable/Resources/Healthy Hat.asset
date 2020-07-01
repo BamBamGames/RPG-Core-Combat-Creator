@@ -17,7 +17,7 @@ MonoBehaviour:
   description: Increase your max health.
   icon: {fileID: 21300000, guid: c1b61b3a91732a747a8496fc75a13fe2, type: 3}
   pickup: {fileID: 4069397192813177059, guid: 09e95a38fd5a0754b9d0cc2ce71f174b, type: 3}
-  stackable: 1
+  stackable: 0
   allowedEquipLocation: 0
   additiveModifiers:
   - stat: 0
