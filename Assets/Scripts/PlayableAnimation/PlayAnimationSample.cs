@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.UIWidgets.animation;
+using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Animations;
 
@@ -8,6 +9,7 @@ namespace RPG.PlayableAnimation
     [RequireComponent(typeof(Animator))]
     public class PlayAnimationSample : MonoBehaviour
     {
+        public RuntimeAnimatorController controller;
         public AnimationClip clip;
         private PlayableGraph playableGraph;
 
@@ -25,13 +27,14 @@ namespace RPG.PlayableAnimation
             // playableGraph.Play();
 
             // 上面一坨可以简化为这一行代码
-            AnimationPlayableUtilities.PlayClip(GetComponent<Animator>(), clip, out playableGraph);
+            // AnimationPlayableUtilities.PlayClip(GetComponent<Animator>(), clip, out playableGraph);
+            AnimationPlayableUtilities.PlayAnimatorController(GetComponent<Animator>(), controller, out playableGraph);
         }
 
         private void OnDisable()
         {
             // 销毁所有的Playables和PlayableOutputs
-            playableGraph.Destroy();
+            // playableGraph.Destroy();
         }
     }
 }
