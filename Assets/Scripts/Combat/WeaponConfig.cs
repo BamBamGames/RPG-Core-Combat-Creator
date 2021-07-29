@@ -26,14 +26,17 @@ namespace RPG.Combat
         {
             DestroyOldWeapon(rightHand, leftHand);
 
-            var overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
             if (animatornOverride != null)
             {
                 animator.runtimeAnimatorController = animatornOverride;
             }
-            else if (overrideController != null)
+            else
             {
-                animator.runtimeAnimatorController = overrideController.runtimeAnimatorController;
+                var oldOverride = animator.runtimeAnimatorController as AnimatorOverrideController;
+                if (oldOverride != null)
+                {
+                    animator.runtimeAnimatorController = oldOverride.runtimeAnimatorController;
+                }
             }
 
             Weapon weapon = null;
