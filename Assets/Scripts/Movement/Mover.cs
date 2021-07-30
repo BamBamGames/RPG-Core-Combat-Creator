@@ -1,6 +1,7 @@
 ﻿using RPG.Core;
 using RPG.Attributes;
 using GameDevTV.Saving;
+using RPG.PlayableAnimation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -64,7 +65,8 @@ namespace RPG.Movement
             var localVelocity = transform.InverseTransformDirection(velocity);
 
             float speed = localVelocity.z;
-            GetComponent<Animator>().SetFloat("forwardSpeed", speed);
+            GetComponent<PlayableAnimator>().PlayWalk(speed);
+            // GetComponent<Animator>().SetFloat("forwardSpeed", speed);
         }
 
         private float GetPathLength(NavMeshPath path)
