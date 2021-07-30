@@ -78,9 +78,9 @@ namespace RPG.PlayableAnimation
                 if (defaultMixer.GetInput(i).Equals(playable))
                 {
                     return;
-                }    
+                }
             }
-            
+
             // 直接把旧的playable拼接到新的mixer中
             var newDefaultMixer = AnimationMixerPlayable.Create(playableGraph, 2);
             playableOutput.SetSourcePlayable(newDefaultMixer);
@@ -96,6 +96,12 @@ namespace RPG.PlayableAnimation
             // - 切换动画的 blend：从locomotion切换到attack，以及从attack切换回到locomotion时是需要有个过度的
             // - 动画切换的条件有指定参数的，也有自动退出回来的
         }
+        
+        private IEnumerator BlendToPlayable(Playable playable, float autoExitTime)
+        {
+            yield return new WaitForSeconds(autoExitTime); 
+            BlendToPlayable(playable);
+        }
 
         private IEnumerator BlendMixer(AnimationMixerPlayable mixerPlayable, float totalBlendTime)
         {
@@ -106,7 +112,7 @@ namespace RPG.PlayableAnimation
                 mixerPlayable.SetInputWeight(0, 1 - newWeight);
                 mixerPlayable.SetInputWeight(1, newWeight);
                 blendTime += Time.deltaTime;
-                yield return null;    
+                yield return null;
             }
 
             mixerPlayable.DisconnectInput(0);
@@ -115,7 +121,7 @@ namespace RPG.PlayableAnimation
         public void PlayWalk(float speed)
         {
             BlendToPlayable(playableLocomotion);
-            
+
             speed = Mathf.Max(0, speed);
             if (speed < walkSpeed)
             {
@@ -135,10 +141,14 @@ namespace RPG.PlayableAnimation
 
         public void PlayDeath()
         {
+            BlendToPlayable(playableDeath);
         }
 
         public void PlayAttack()
         {
+            BlendToPlayable(playableUnarmedAttack);
+            // 攻击状态自动切换回locomotion
+            // StartCoroutine(BlendToPlayable(playableLocomotion, 0.5f + 0.7051108f));
         }
     }
 }

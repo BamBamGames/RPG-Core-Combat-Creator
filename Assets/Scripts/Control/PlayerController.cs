@@ -1,6 +1,7 @@
 using System;
 using RPG.Movement;
 using RPG.Attributes;
+using RPG.Combat;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -39,6 +40,13 @@ namespace RPG.Control
             if (health.IsDead())
             {
                 SetCursor(CursorType.None);
+                return;
+            }
+            
+            // 右键直接攻击
+            if (Input.GetMouseButton(1))
+            {
+                GetComponent<Fighter>().Attack(null);
                 return;
             }
 

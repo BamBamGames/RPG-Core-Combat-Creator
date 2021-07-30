@@ -8,6 +8,7 @@ using RPG.Stats;
 using UnityEngine;
 using GameDevTV.Inventories;
 using System;
+using RPG.PlayableAnimation;
 
 namespace RPG.Combat
 {
@@ -18,6 +19,7 @@ namespace RPG.Combat
         [SerializeField] private Transform leftHandTransform = null;
         [SerializeField] private WeaponConfig defaultWeaponConfig = null;
 
+        private bool haveFakeTarget;
         private Health target;
         private Mover mover;
         private Equipment equipment;
@@ -51,18 +53,24 @@ namespace RPG.Combat
         {
             timeSinceLastAttack += Time.deltaTime;
 
-            if (target == null) return;
-            if (target.IsDead()) return;
-
-            if (!GetIsInRange(target.transform))
-            {
-                GetComponent<Mover>().MoveTo(target.transform.position, 1f);
-            }
-            else
+            if (haveFakeTarget)
             {
                 GetComponent<Mover>().Cancel();
                 AttackBehaviour();
             }
+
+            // if (target == null) return;
+            // if (target.IsDead()) return;
+            //
+            // if (!GetIsInRange(target.transform))
+            // {
+            //     GetComponent<Mover>().MoveTo(target.transform.position, 1f);
+            // }
+            // else
+            // {
+            //     GetComponent<Mover>().Cancel();
+            //     AttackBehaviour();
+            // }
         }
 
         private void UpdateWeapon()
@@ -97,7 +105,6 @@ namespace RPG.Combat
 
         private void AttackBehaviour()
         {
-            transform.LookAt(target.transform);
             if (timeSinceLastAttack > timeBetweenAttacks)
             {
                 // This will trigger the Hit() event.
@@ -109,8 +116,9 @@ namespace RPG.Combat
         // This will trigger the Hit() event.
         private void TriggerAttack()
         {
-            GetComponent<Animator>().ResetTrigger("stopAttack");
-            GetComponent<Animator>().SetTrigger("attack");
+            GetComponent<PlayableAnimator>().PlayAttack();
+            // GetComponent<Animator>().ResetTrigger("stopAttack");
+            // GetComponent<Animator>().SetTrigger("attack");
         }
 
         // Animation Event
@@ -161,20 +169,23 @@ namespace RPG.Combat
         public void Attack(GameObject combatTarget)
         {
             GetComponent<ActionScheduler>().StartAction(this);
-            target = combatTarget.GetComponent<Health>();
+            // target = combatTarget.GetComponent<Health>();
+            haveFakeTarget = true;
         }
 
         public void Cancel()
         {
             target = null;
+            haveFakeTarget = false;
             StopAttack();
             GetComponent<Mover>().Cancel();
         }
 
         private void StopAttack()
         {
-            GetComponent<Animator>().ResetTrigger("attack");
-            GetComponent<Animator>().SetTrigger("stopAttack");
+            // GetComponent<Animator>().ResetTrigger("attack");
+            // GetComponent<Animator>().SetTrigger("stopAttack");
+            GetComponent<PlayableAnimator>().PlayWalk(0);
         }
 
         object ISaveable.CaptureState()

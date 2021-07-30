@@ -24,9 +24,10 @@ namespace RPG.Movement
 
         private void Update()
         {
-            navMeshAgent.enabled = (false == health.IsDead());
-
-            UpdateAnimator();
+            if (navMeshAgent.enabled && false == navMeshAgent.isStopped)
+            {
+                UpdateAnimator();
+            }
         }
 
         public void StartMoveAction(Vector3 destination, float speedFraction)
