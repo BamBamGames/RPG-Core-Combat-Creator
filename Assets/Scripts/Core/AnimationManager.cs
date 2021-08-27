@@ -26,6 +26,9 @@ namespace RPG.Core
 
         public void Move(float speed)
         {
+            if (animancer.IsPlaying(death)) return;
+            if (animancer.IsPlaying(attack)) return;
+            
             if (!animancer.IsPlaying(locomotion))
             {
                 animancer.Play(locomotion, 0.25f);
@@ -41,6 +44,7 @@ namespace RPG.Core
 
         public void Attack()
         {
+            if (animancer.IsPlaying(death)) return;
             animancer.Play(attack, 0.25f, FadeMode.FromStart);
         }
     }
