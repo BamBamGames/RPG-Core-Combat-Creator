@@ -28,7 +28,7 @@ namespace RPG.Core
         {
             if (!animancer.IsPlaying(locomotion))
             {
-                animancer.Play(locomotion, 0.25f, FadeMode.FromStart);
+                animancer.Play(locomotion, 0.25f);
             }
 
             locomotion.State.Parameter = speed;
