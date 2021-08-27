@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameDevTV.Inventories;
 using RPG.Attributes;
+using RPG.Core;
 using RPG.Stats;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace RPG.Combat
     [CreateAssetMenu(fileName = "Weapon", menuName = "Weapons/Make New Weapon", order = 0)]
     public class WeaponConfig : EquipableItem, IModifierProvider
     {
-        [SerializeField] private AnimatorOverrideController animatornOverride = null;
+        [SerializeField] private AnimationClip animationClip;
         [SerializeField] private Weapon equippedPrefab = null;
         [SerializeField] private float damage = 5f;
         [SerializeField] private float bonus = 50f;
@@ -22,19 +23,12 @@ namespace RPG.Combat
         public float Range { get => range; }
         public float Bonus { get => bonus; }
 
-        public Weapon Spawn(Transform rightHand, Transform leftHand, Animator animator)
+        public Weapon Spawn(Transform rightHand, Transform leftHand, AnimationManager animationManager)
         {
             DestroyOldWeapon(rightHand, leftHand);
-
-            var overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
-            if (animatornOverride != null)
-            {
-                animator.runtimeAnimatorController = animatornOverride;
-            }
-            else if (overrideController != null)
-            {
-                animator.runtimeAnimatorController = overrideController.runtimeAnimatorController;
-            }
+            
+            // 指定攻击动画为武器的动画，或者默认动画
+            animationManager.attack = animationClip != null ? animationClip : animationManager.defaultAttack;
 
             Weapon weapon = null;
             if (null != equippedPrefab)

@@ -82,7 +82,7 @@ namespace RPG.Attributes
             if (isDead) return;
 
             isDead = true;
-            GetComponent<Animator>().SetTrigger("die");
+            GetComponent<AnimationManager>().Die();
             GetComponent<ActionScheduler>().CancelCurrentAction();
         }
 
@@ -134,7 +134,7 @@ namespace RPG.Attributes
             }
             else
             {
-                GetComponent<Animator>().Play("Locomotion");
+                GetComponent<AnimationManager>().Move(0f);
             }
         }
     }

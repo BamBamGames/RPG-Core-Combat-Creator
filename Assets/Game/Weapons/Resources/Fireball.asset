@@ -19,7 +19,7 @@ MonoBehaviour:
   pickup: {fileID: 936997598370853269, guid: 82533928fd94ba645896d6335417c45b, type: 3}
   stackable: 0
   allowedEquipLocation: 5
-  animatornOverride: {fileID: 22100000, guid: ecaacd501681fed4fa8e39f116600ef9, type: 2}
+  animationClip: {fileID: 7400000, guid: 6225a58c8d4165e42b647612da98e223, type: 3}
   equippedPrefab: {fileID: 0}
   damage: 0
   bonus: 25

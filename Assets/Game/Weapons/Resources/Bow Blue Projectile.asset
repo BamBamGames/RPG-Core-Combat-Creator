@@ -19,7 +19,7 @@ MonoBehaviour:
   pickup: {fileID: 8472868556943012450, guid: 17dc58dbc795c3c42b94457b97626e43, type: 3}
   stackable: 0
   allowedEquipLocation: 5
-  animatornOverride: {fileID: 22100000, guid: 271fb69564e87a547929c3c4aab2bda5, type: 2}
+  animationClip: {fileID: 7400000, guid: 24d693751e9fd0b42ba8f9595d8b5f5e, type: 3}
   equippedPrefab: {fileID: 114271292963972532, guid: 10f3e385dd57b1a49891da06bb2a5477,
     type: 3}
   damage: 0

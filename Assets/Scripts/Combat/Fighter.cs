@@ -8,6 +8,7 @@ using RPG.Stats;
 using UnityEngine;
 using GameDevTV.Inventories;
 using System;
+using UnityEditor.Animations;
 
 namespace RPG.Combat
 {
@@ -86,8 +87,8 @@ namespace RPG.Combat
 
         private Weapon AttachWeapon(WeaponConfig weaponConfig)
         {
-            Animator animator = GetComponent<Animator>();
-            return weaponConfig.Spawn(rightHandTransform, leftHandTransform, animator);
+            var animationState = GetComponent<AnimationManager>();
+            return weaponConfig.Spawn(rightHandTransform, leftHandTransform, animationState);
         }
 
         public Health GetTarget()
@@ -109,8 +110,7 @@ namespace RPG.Combat
         // This will trigger the Hit() event.
         private void TriggerAttack()
         {
-            GetComponent<Animator>().ResetTrigger("stopAttack");
-            GetComponent<Animator>().SetTrigger("attack");
+            GetComponent<AnimationManager>().Attack();
         }
 
         // Animation Event
@@ -173,8 +173,7 @@ namespace RPG.Combat
 
         private void StopAttack()
         {
-            GetComponent<Animator>().ResetTrigger("attack");
-            GetComponent<Animator>().SetTrigger("stopAttack");
+            GetComponent<AnimationManager>().Move(0f);
         }
 
         object ISaveable.CaptureState()

@@ -146,6 +146,8 @@ GameObject:
   - component: {fileID: 629460067075241622}
   - component: {fileID: 114151675609374514}
   - component: {fileID: 54674203716918502}
+  - component: {fileID: 854167939398209887}
+  - component: {fileID: 7594317865465511867}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -183,6 +185,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -194,6 +197,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -269,7 +273,7 @@ Animator:
   m_GameObject: {fileID: 6642768365464085074}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d288a0e4a2d923b46898986e979da643, type: 3}
-  m_Controller: {fileID: 9100000, guid: 506efb4106d92b346a38493c398001ae, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -387,6 +391,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &854167939398209887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6642768365464085074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Animator: {fileID: 8535083749425375510}
+  _ActionOnDisable: 0
+--- !u!114 &7594317865465511867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6642768365464085074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3550c56839261c845ad1ec4d4dc95752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locomotion:
+    _Asset: {fileID: 11400000, guid: 97b0cdb4ed3c27749807cef2f24224f6, type: 2}
+  defaultAttack: {fileID: 7400000, guid: 1315bcd7509173f44bc6655b2673dd4d, type: 3}
+  attack: {fileID: 7400000, guid: 1315bcd7509173f44bc6655b2673dd4d, type: 3}
+  death: {fileID: 7400000, guid: 9a26352c93a81e947b73b8e47cc931bb, type: 3}
 --- !u!1 &7016663828085766606
 GameObject:
   m_ObjectHideFlags: 0
