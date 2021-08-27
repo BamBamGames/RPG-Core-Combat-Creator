@@ -24,10 +24,10 @@ namespace RPG.Core
             animancer = GetComponent<AnimancerComponent>();
         }
 
-        public void Move(float speed)
+        public void Move(float speed, bool interruptAttack = false)
         {
             if (animancer.IsPlaying(death)) return;
-            if (animancer.IsPlaying(attack)) return;
+            if (animancer.IsPlaying(attack) && !interruptAttack) return;
             
             if (!animancer.IsPlaying(locomotion))
             {
@@ -45,7 +45,7 @@ namespace RPG.Core
         public void Attack()
         {
             if (animancer.IsPlaying(death)) return;
-            animancer.Play(attack, 0.25f, FadeMode.FromStart);
+            animancer.Play(attack, 0.25f, FadeMode.FromStart).Events.OnEnd = () => Move(0f, true);
         }
     }
 }

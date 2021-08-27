@@ -173,7 +173,7 @@ namespace RPG.Combat
 
         private void StopAttack()
         {
-            GetComponent<AnimationManager>().Move(0f);
+            GetComponent<AnimationManager>().Move(0f, true);
         }
 
         object ISaveable.CaptureState()
