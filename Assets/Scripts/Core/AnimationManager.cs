@@ -37,6 +37,12 @@ namespace RPG.Core
             locomotion.State.Parameter = speed;
         }
 
+        private void StopAttackToLocomotion()
+        {
+            // 如果是攻击状态切换为移动状态，fade时间要短一些才好看
+            animancer.Play(locomotion, 0.1f);
+        }
+
         public void Die()
         {
             animancer.Play(death, 0.25f);
@@ -45,7 +51,7 @@ namespace RPG.Core
         public void Attack()
         {
             if (animancer.IsPlaying(death)) return;
-            animancer.Play(attack, 0.25f, FadeMode.FromStart).Events.OnEnd = () => Move(0f, true);
+            animancer.Play(attack, 0.25f, FadeMode.FromStart).Events.OnEnd = StopAttackToLocomotion;
         }
     }
 }
